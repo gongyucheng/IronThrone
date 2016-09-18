@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm Cartfile.resolved
+rm -rf Carthage
+carthage bootstrap --platform iOS
