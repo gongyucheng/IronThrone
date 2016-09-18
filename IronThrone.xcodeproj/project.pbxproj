@@ -7,10 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C30176F31DA9FCF3008DD05B /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */; };
+		C30176F51DAA0280008DD05B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F41DAA0280008DD05B /* Request.swift */; };
+		C30176F71DAA028D008DD05B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F61DAA028D008DD05B /* Response.swift */; };
+		C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F81DACAE71008DD05B /* APIResultTransformer.swift */; };
 		C3DAFCE01D8E8A6400F83608 /* IronThrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */; };
 		C3DAFCE51D8E8A6400F83608 /* IronThroneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCE41D8E8A6400F83608 /* IronThroneTests.swift */; };
 		C3DAFCE71D8E8A6400F83608 /* IronThrone.h in Headers */ = {isa = PBXBuildFile; fileRef = C3DAFCD91D8E8A6400F83608 /* IronThrone.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C3DAFCF21D8E8BEE00F83608 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */; };
+		C3DAFCF61D8E8CEF00F83608 /* IronThrone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCF51D8E8CEF00F83608 /* IronThrone.swift */; };
+		C3DAFCF81D8E8E5700F83608 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCF71D8E8E5700F83608 /* UIColorExtension.swift */; };
+		C3DAFCFA1D8E97A500F83608 /* HttpResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCF91D8E97A500F83608 /* HttpResult.swift */; };
+		C3DAFCFC1D8E98DA00F83608 /* NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCFB1D8E98DA00F83608 /* NetworkKit.swift */; };
+		C3DAFCFE1D8E9C2E00F83608 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCFD1D8E9C2E00F83608 /* UIViewExtension.swift */; };
+		C3DAFD001D8E9C9C00F83608 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCFF1D8E9C9C00F83608 /* StringExtension.swift */; };
+		C3DAFD021D8E9DF100F83608 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFD011D8E9DF100F83608 /* DataExtension.swift */; };
+		C3DAFD041D8E9E0600F83608 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFD031D8E9E0600F83608 /* DateExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +36,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
+		C30176F41DAA0280008DD05B /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		C30176F61DAA028D008DD05B /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		C30176F81DACAE71008DD05B /* APIResultTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResultTransformer.swift; sourceTree = "<group>"; };
 		C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IronThrone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3DAFCD91D8E8A6400F83608 /* IronThrone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IronThrone.h; sourceTree = "<group>"; };
 		C3DAFCDA1D8E8A6400F83608 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -31,6 +47,14 @@
 		C3DAFCE41D8E8A6400F83608 /* IronThroneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IronThroneTests.swift; sourceTree = "<group>"; };
 		C3DAFCE61D8E8A6400F83608 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		C3DAFCF51D8E8CEF00F83608 /* IronThrone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IronThrone.swift; sourceTree = "<group>"; };
+		C3DAFCF71D8E8E5700F83608 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		C3DAFCF91D8E97A500F83608 /* HttpResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpResult.swift; sourceTree = "<group>"; };
+		C3DAFCFB1D8E98DA00F83608 /* NetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkKit.swift; sourceTree = "<group>"; };
+		C3DAFCFD1D8E9C2E00F83608 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		C3DAFCFF1D8E9C9C00F83608 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		C3DAFD011D8E9DF100F83608 /* DataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		C3DAFD031D8E9E0600F83608 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +80,8 @@
 		C3DAFCCC1D8E8A6400F83608 = {
 			isa = PBXGroup;
 			children = (
+				C3DAFCF41D8E8CAB00F83608 /* Network */,
+				C3DAFCF31D8E8C9700F83608 /* Extensions */,
 				C3DAFCD81D8E8A6400F83608 /* IronThrone */,
 				C3DAFCE31D8E8A6400F83608 /* IronThroneTests */,
 				C3DAFCF01D8E8BCB00F83608 /* Frameworks */,
@@ -75,6 +101,7 @@
 		C3DAFCD81D8E8A6400F83608 /* IronThrone */ = {
 			isa = PBXGroup;
 			children = (
+				C3DAFCF51D8E8CEF00F83608 /* IronThrone.swift */,
 				C3DAFCD91D8E8A6400F83608 /* IronThrone.h */,
 				C3DAFCDA1D8E8A6400F83608 /* Info.plist */,
 			);
@@ -96,6 +123,31 @@
 				C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3DAFCF31D8E8C9700F83608 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C3DAFCF71D8E8E5700F83608 /* UIColorExtension.swift */,
+				C3DAFCFD1D8E9C2E00F83608 /* UIViewExtension.swift */,
+				C3DAFD011D8E9DF100F83608 /* DataExtension.swift */,
+				C3DAFCFF1D8E9C9C00F83608 /* StringExtension.swift */,
+				C3DAFD031D8E9E0600F83608 /* DateExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C3DAFCF41D8E8CAB00F83608 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C3DAFCF91D8E97A500F83608 /* HttpResult.swift */,
+				C30176F81DACAE71008DD05B /* APIResultTransformer.swift */,
+				C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */,
+				C3DAFCFB1D8E98DA00F83608 /* NetworkKit.swift */,
+				C30176F41DAA0280008DD05B /* Request.swift */,
+				C30176F61DAA028D008DD05B /* Response.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +213,7 @@
 					C3DAFCD51D8E8A6400F83608 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = RJ9J7AZJR2;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					C3DAFCDE1D8E8A6400F83608 = {
@@ -210,6 +263,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3DAFCFE1D8E9C2E00F83608 /* UIViewExtension.swift in Sources */,
+				C3DAFD041D8E9E0600F83608 /* DateExtension.swift in Sources */,
+				C3DAFCFA1D8E97A500F83608 /* HttpResult.swift in Sources */,
+				C3DAFD001D8E9C9C00F83608 /* StringExtension.swift in Sources */,
+				C3DAFCFC1D8E98DA00F83608 /* NetworkKit.swift in Sources */,
+				C30176F31DA9FCF3008DD05B /* NetworkEnums.swift in Sources */,
+				C3DAFD021D8E9DF100F83608 /* DataExtension.swift in Sources */,
+				C30176F71DAA028D008DD05B /* Response.swift in Sources */,
+				C30176F51DAA0280008DD05B /* Request.swift in Sources */,
+				C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */,
+				C3DAFCF61D8E8CEF00F83608 /* IronThrone.swift in Sources */,
+				C3DAFCF81D8E8E5700F83608 /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +399,7 @@
 		C3DAFCEB1D8E8A6400F83608 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = RJ9J7AZJR2;
@@ -351,6 +417,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricebook.IronThrone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -358,6 +425,7 @@
 		C3DAFCEC1D8E8A6400F83608 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = RJ9J7AZJR2;
@@ -382,6 +450,7 @@
 		C3DAFCEE1D8E8A6400F83608 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = RJ9J7AZJR2;
 				INFOPLIST_FILE = IronThroneTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -394,6 +463,7 @@
 		C3DAFCEF1D8E8A6400F83608 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = RJ9J7AZJR2;
 				INFOPLIST_FILE = IronThroneTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -422,6 +492,7 @@
 				C3DAFCEC1D8E8A6400F83608 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C3DAFCED1D8E8A6400F83608 /* Build configuration list for PBXNativeTarget "IronThroneTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +501,7 @@
 				C3DAFCEF1D8E8A6400F83608 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
