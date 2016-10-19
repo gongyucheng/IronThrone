@@ -11,6 +11,15 @@
 		C30176F51DAA0280008DD05B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F41DAA0280008DD05B /* Request.swift */; };
 		C30176F71DAA028D008DD05B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F61DAA028D008DD05B /* Response.swift */; };
 		C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F81DACAE71008DD05B /* APIResultTransformer.swift */; };
+		C3B1407D1DB76AD000D4B3EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1407C1DB76AD000D4B3EF /* AppDelegate.swift */; };
+		C3B1407F1DB76AD000D4B3EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1407E1DB76AD000D4B3EF /* ViewController.swift */; };
+		C3B140821DB76AD000D4B3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3B140801DB76AD000D4B3EF /* Main.storyboard */; };
+		C3B140841DB76AD000D4B3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3B140831DB76AD000D4B3EF /* Assets.xcassets */; };
+		C3B140871DB76AD000D4B3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3B140851DB76AD000D4B3EF /* LaunchScreen.storyboard */; };
+		C3B1408E1DB76B4500D4B3EF /* IronThrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */; };
+		C3B1408F1DB76B4500D4B3EF /* IronThrone.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C3B140911DB76B5B00D4B3EF /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */; };
+		C3B140921DB76B5B00D4B3EF /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C3DAFCE01D8E8A6400F83608 /* IronThrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */; };
 		C3DAFCE51D8E8A6400F83608 /* IronThroneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCE41D8E8A6400F83608 /* IronThroneTests.swift */; };
 		C3DAFCE71D8E8A6400F83608 /* IronThrone.h in Headers */ = {isa = PBXBuildFile; fileRef = C3DAFCD91D8E8A6400F83608 /* IronThrone.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C3B1408C1DB76B4000D4B3EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3DAFCCD1D8E8A6400F83608 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3DAFCD51D8E8A6400F83608;
+			remoteInfo = IronThrone;
+		};
 		C3DAFCE11D8E8A6400F83608 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C3DAFCCD1D8E8A6400F83608 /* Project object */;
@@ -35,11 +51,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C3B140901DB76B4600D4B3EF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C3B1408F1DB76B4500D4B3EF /* IronThrone.framework in Embed Frameworks */,
+				C3B140921DB76B5B00D4B3EF /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
 		C30176F41DAA0280008DD05B /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C30176F61DAA028D008DD05B /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		C30176F81DACAE71008DD05B /* APIResultTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResultTransformer.swift; sourceTree = "<group>"; };
+		C3B1407A1DB76AD000D4B3EF /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3B1407C1DB76AD000D4B3EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C3B1407E1DB76AD000D4B3EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C3B140811DB76AD000D4B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C3B140831DB76AD000D4B3EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C3B140861DB76AD000D4B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C3B140881DB76AD000D4B3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IronThrone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3DAFCD91D8E8A6400F83608 /* IronThrone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IronThrone.h; sourceTree = "<group>"; };
 		C3DAFCDA1D8E8A6400F83608 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +96,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C3B140771DB76AD000D4B3EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3B1408E1DB76B4500D4B3EF /* IronThrone.framework in Frameworks */,
+				C3B140911DB76B5B00D4B3EF /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C3DAFCD21D8E8A6400F83608 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -77,6 +124,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C3B1407B1DB76AD000D4B3EF /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				C3B1407C1DB76AD000D4B3EF /* AppDelegate.swift */,
+				C3B1407E1DB76AD000D4B3EF /* ViewController.swift */,
+				C3B140801DB76AD000D4B3EF /* Main.storyboard */,
+				C3B140831DB76AD000D4B3EF /* Assets.xcassets */,
+				C3B140851DB76AD000D4B3EF /* LaunchScreen.storyboard */,
+				C3B140881DB76AD000D4B3EF /* Info.plist */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
 		C3DAFCCC1D8E8A6400F83608 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +144,7 @@
 				C3DAFCF31D8E8C9700F83608 /* Extensions */,
 				C3DAFCD81D8E8A6400F83608 /* IronThrone */,
 				C3DAFCE31D8E8A6400F83608 /* IronThroneTests */,
+				C3B1407B1DB76AD000D4B3EF /* Demo */,
 				C3DAFCF01D8E8BCB00F83608 /* Frameworks */,
 				C3DAFCD71D8E8A6400F83608 /* Products */,
 			);
@@ -94,6 +155,7 @@
 			children = (
 				C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */,
 				C3DAFCDF1D8E8A6400F83608 /* IronThroneTests.xctest */,
+				C3B1407A1DB76AD000D4B3EF /* Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,6 +226,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C3B140791DB76AD000D4B3EF /* Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3B1408B1DB76AD000D4B3EF /* Build configuration list for PBXNativeTarget "Demo" */;
+			buildPhases = (
+				C3B140761DB76AD000D4B3EF /* Sources */,
+				C3B140771DB76AD000D4B3EF /* Frameworks */,
+				C3B140781DB76AD000D4B3EF /* Resources */,
+				C3B140901DB76B4600D4B3EF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3B1408D1DB76B4000D4B3EF /* PBXTargetDependency */,
+			);
+			name = Demo;
+			productName = Demo;
+			productReference = C3B1407A1DB76AD000D4B3EF /* Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		C3DAFCD51D8E8A6400F83608 /* IronThrone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C3DAFCEA1D8E8A6400F83608 /* Build configuration list for PBXNativeTarget "IronThrone" */;
@@ -210,6 +291,11 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = serious;
 				TargetAttributes = {
+					C3B140791DB76AD000D4B3EF = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = RJ9J7AZJR2;
+						ProvisioningStyle = Automatic;
+					};
 					C3DAFCD51D8E8A6400F83608 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = RJ9J7AZJR2;
@@ -229,6 +315,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C3DAFCCC1D8E8A6400F83608;
 			productRefGroup = C3DAFCD71D8E8A6400F83608 /* Products */;
@@ -237,11 +324,22 @@
 			targets = (
 				C3DAFCD51D8E8A6400F83608 /* IronThrone */,
 				C3DAFCDE1D8E8A6400F83608 /* IronThroneTests */,
+				C3B140791DB76AD000D4B3EF /* Demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C3B140781DB76AD000D4B3EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3B140871DB76AD000D4B3EF /* LaunchScreen.storyboard in Resources */,
+				C3B140841DB76AD000D4B3EF /* Assets.xcassets in Resources */,
+				C3B140821DB76AD000D4B3EF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C3DAFCD41D8E8A6400F83608 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -259,6 +357,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C3B140761DB76AD000D4B3EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3B1407F1DB76AD000D4B3EF /* ViewController.swift in Sources */,
+				C3B1407D1DB76AD000D4B3EF /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C3DAFCD11D8E8A6400F83608 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,6 +396,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C3B1408D1DB76B4000D4B3EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3DAFCD51D8E8A6400F83608 /* IronThrone */;
+			targetProxy = C3B1408C1DB76B4000D4B3EF /* PBXContainerItemProxy */;
+		};
 		C3DAFCE21D8E8A6400F83608 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C3DAFCD51D8E8A6400F83608 /* IronThrone */;
@@ -296,7 +408,62 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		C3B140801DB76AD000D4B3EF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C3B140811DB76AD000D4B3EF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C3B140851DB76AD000D4B3EF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C3B140861DB76AD000D4B3EF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		C3B140891DB76AD000D4B3EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RJ9J7AZJR2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Demo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ricebook.Demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C3B1408A1DB76AD000D4B3EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = RJ9J7AZJR2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Demo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ricebook.Demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		C3DAFCE81D8E8A6400F83608 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -476,6 +643,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C3B1408B1DB76AD000D4B3EF /* Build configuration list for PBXNativeTarget "Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3B140891DB76AD000D4B3EF /* Debug */,
+				C3B1408A1DB76AD000D4B3EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C3DAFCD01D8E8A6400F83608 /* Build configuration list for PBXProject "IronThrone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
