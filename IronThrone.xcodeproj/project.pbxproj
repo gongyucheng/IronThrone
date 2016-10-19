@@ -11,6 +11,7 @@
 		C30176F51DAA0280008DD05B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F41DAA0280008DD05B /* Request.swift */; };
 		C30176F71DAA028D008DD05B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F61DAA028D008DD05B /* Response.swift */; };
 		C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F81DACAE71008DD05B /* APIResultTransformer.swift */; };
+		C39FA5DC1DD0667E0088B389 /* Int64Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39FA5DB1DD0667E0088B389 /* Int64Extension.swift */; };
 		C3B1407D1DB76AD000D4B3EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1407C1DB76AD000D4B3EF /* AppDelegate.swift */; };
 		C3B1407F1DB76AD000D4B3EF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1407E1DB76AD000D4B3EF /* ViewController.swift */; };
 		C3B140821DB76AD000D4B3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3B140801DB76AD000D4B3EF /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 		C3B1408F1DB76B4500D4B3EF /* IronThrone.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C3B140911DB76B5B00D4B3EF /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */; };
 		C3B140921DB76B5B00D4B3EF /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCF11D8E8BEE00F83608 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C3C495791DCC824700305B17 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C495781DCC824700305B17 /* NetworkError.swift */; };
 		C3DAFCE01D8E8A6400F83608 /* IronThrone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */; };
 		C3DAFCE51D8E8A6400F83608 /* IronThroneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DAFCE41D8E8A6400F83608 /* IronThroneTests.swift */; };
 		C3DAFCE71D8E8A6400F83608 /* IronThrone.h in Headers */ = {isa = PBXBuildFile; fileRef = C3DAFCD91D8E8A6400F83608 /* IronThrone.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,6 +73,7 @@
 		C30176F41DAA0280008DD05B /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C30176F61DAA028D008DD05B /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		C30176F81DACAE71008DD05B /* APIResultTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResultTransformer.swift; sourceTree = "<group>"; };
+		C39FA5DB1DD0667E0088B389 /* Int64Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Int64Extension.swift; sourceTree = "<group>"; };
 		C3B1407A1DB76AD000D4B3EF /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3B1407C1DB76AD000D4B3EF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3B1407E1DB76AD000D4B3EF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 		C3B140831DB76AD000D4B3EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C3B140861DB76AD000D4B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C3B140881DB76AD000D4B3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3C495781DCC824700305B17 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		C3DAFCD61D8E8A6400F83608 /* IronThrone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = IronThrone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3DAFCD91D8E8A6400F83608 /* IronThrone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IronThrone.h; sourceTree = "<group>"; };
 		C3DAFCDA1D8E8A6400F83608 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				C3DAFD011D8E9DF100F83608 /* DataExtension.swift */,
 				C3DAFCFF1D8E9C9C00F83608 /* StringExtension.swift */,
 				C3DAFD031D8E9E0600F83608 /* DateExtension.swift */,
+				C39FA5DB1DD0667E0088B389 /* Int64Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 				C3DAFCFB1D8E98DA00F83608 /* NetworkKit.swift */,
 				C30176F41DAA0280008DD05B /* Request.swift */,
 				C30176F61DAA028D008DD05B /* Response.swift */,
+				C3C495781DCC824700305B17 /* NetworkError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -288,7 +294,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = serious;
 				TargetAttributes = {
 					C3B140791DB76AD000D4B3EF = {
@@ -377,9 +383,11 @@
 				C3DAFCFC1D8E98DA00F83608 /* NetworkKit.swift in Sources */,
 				C30176F31DA9FCF3008DD05B /* NetworkEnums.swift in Sources */,
 				C3DAFD021D8E9DF100F83608 /* DataExtension.swift in Sources */,
+				C39FA5DC1DD0667E0088B389 /* Int64Extension.swift in Sources */,
 				C30176F71DAA028D008DD05B /* Response.swift in Sources */,
 				C30176F51DAA0280008DD05B /* Request.swift in Sources */,
 				C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */,
+				C3C495791DCC824700305B17 /* NetworkError.swift in Sources */,
 				C3DAFCF61D8E8CEF00F83608 /* IronThrone.swift in Sources */,
 				C3DAFCF81D8E8E5700F83608 /* UIColorExtension.swift in Sources */,
 			);
@@ -482,6 +490,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -535,6 +544,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -650,6 +660,7 @@
 				C3B1408A1DB76AD000D4B3EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C3DAFCD01D8E8A6400F83608 /* Build configuration list for PBXProject "IronThrone" */ = {
 			isa = XCConfigurationList;

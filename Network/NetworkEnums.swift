@@ -32,11 +32,11 @@ public enum HttpDNSType {
  */
 public struct HostAttributes {
     /// HTTP DNS 类型(默认没有 HttpDNS)
-    public let httpDNSType: HttpDNSType
+    public var httpDNSType: HttpDNSType = .none
     /// 支持 https (默认支持)
-    public let supportHttps: Bool
+    public var supportHttps: Bool = true
     /// 端口号，默认 80
-    public let port: UInt16
+    public var port: UInt16 = 80
 
     public init(port: UInt16 = 80
         , isSupportHttps: Bool = true
@@ -47,11 +47,5 @@ public struct HostAttributes {
     }
 }
 
-public enum NetworkKitError: Int {
-    case dataFormatIncorrect = 9000001
-    case multipartDataEncodingIncorrect = 9000002
-    case noAvaliableNetwork = 9000003
-    case serverInternalError = 5000001
-}
 
-extension NetworkKitError: Error { }
+

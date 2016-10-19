@@ -73,7 +73,5 @@ extension IronThrone where Base: UIColor {
             , green: CGFloat(g) / 255.0
             , blue: CGFloat(b) / 255.0
             , alpha: alphaValue)
-
-
     }
 }

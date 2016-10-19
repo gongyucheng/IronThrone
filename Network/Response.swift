@@ -53,8 +53,15 @@ extension HttpRequestable {
                 case let .success(json):
                     result = HttpResult.success(json)
                 case let .failure(error):
-                    // TODO: 这里不该用 Alamofire 返回的错误，需要单独处理封装
-                    result = HttpResult.failure(error)
+                    if let serverErrorInfo = response.data?.irt.toJsonObject() as? [String: Any]
+                    , let errorCode = serverErrorInfo["error_code"] as? Int {
+                        let displayMsg = serverErrorInfo["display_msg"] as? String
+                        let serverError = NetworkError.APIServerError(code: errorCode,
+                                                                      displayMsg: displayMsg)
+                        result = HttpResult.failure(serverError)
+                    } else {
+                        result = HttpResult.failure(error)
+                    }
                 }
 
                 completionHandler(result)

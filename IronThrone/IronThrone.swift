@@ -8,9 +8,9 @@
 import Foundation
 
 public protocol IronThroneCompatible {
-    associatedtype CompatibleType
-    var irt: CompatibleType { get }
-    static var irt: CompatibleType.Type { get }
+    associatedtype IronThroneCompatibleType
+    var irt: IronThroneCompatibleType { get }
+    static var irt: IronThroneCompatibleType.Type { get }
 }
 
 public struct IronThrone<Base> {
@@ -21,7 +21,7 @@ public struct IronThrone<Base> {
     }
 }
 
-public extension IronThroneCompatible {
+public extension IronThroneCompatible where Self: NSObjectProtocol {
     public var irt: IronThrone<Self> {
         return IronThrone(base: self)
     }

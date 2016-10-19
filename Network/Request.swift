@@ -22,18 +22,22 @@ public protocol APIRequestable: HttpRequestable {
     static var networkGroup: DispatchGroup { get }
 }
 
-
-class APIRequest: APIRequestable {
+class HttpRequest: HttpRequestable {
     let method: HttpMethod
     let urlString: String
     var parameters: [String : Any]?
     var headers: [String : String]?
-    var traceID: String?
-
-    static let networkGroup: DispatchGroup = DispatchGroup()
 
     required init(method: HttpMethod, urlString: String) {
         self.method = method
         self.urlString = urlString
     }
+}
+
+
+class APIRequest: HttpRequest, APIRequestable {
+    var traceID: String?
+    static let networkGroup: DispatchGroup = DispatchGroup()
+
+    static var requestSequence: Int = 0
 }

@@ -33,21 +33,34 @@ extension DataProxy {
 
             resultByte[i] = xorByte
         }
+        let result = Data(bytes: resultByte, count: dataLength)
+        resultByte.deallocate(capacity: dataLength)
 
-        return Data(bytes: resultByte, count: dataLength)
+        return result
+    }
+
+    public func toJsonObject() -> Any? {
+        do {
+            let object = try JSONSerialization.jsonObject(with: base
+                , options: JSONSerialization.ReadingOptions())
+            return object
+        } catch {
+            return nil
+        }
     }
 }
 
 extension Data: IronThroneCompatible {
-    public typealias CompatibleType = DataProxy
-    public var irt: CompatibleType {
+    public typealias IronThroneCompatibleType = DataProxy
+    public var irt: IronThroneCompatibleType {
         return DataProxy(base: self)
     }
 
-    public static var irt: CompatibleType.Type {
+    public static var irt: IronThroneCompatibleType.Type {
         return DataProxy.self
     }
 }
+
 
 public struct DataProxy {
     fileprivate let base: Data

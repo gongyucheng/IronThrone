@@ -13,12 +13,12 @@ extension DateProxy {
 }
 
 extension Date: IronThroneCompatible {
-    public typealias CompatibleType = DateProxy
-    public var irt: CompatibleType {
+    public typealias IronThroneCompatibleType = DateProxy
+    public var irt: IronThroneCompatibleType {
         return DateProxy(base: self)
     }
 
-    public static var irt: CompatibleType.Type {
+    public static var irt: IronThroneCompatibleType.Type {
         return DateProxy.self
     }
 }

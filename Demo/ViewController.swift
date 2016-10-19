@@ -19,7 +19,12 @@ class ViewController: UIViewController {
             , apiName: "3/deal/list_channel.json"
             , method: .get)
             .response { (result) in
-                print(result)
+                result
+                    .flatMap(APIResult.Transformer.jsonToDicArray)
+                    .flatMap(APIResult.Transformer.dicArrayToAPIModelArray)
+                    .successHandler({ (cityList: [CityModel]) in
+                        print(cityList)
+                    })
             }
 
     }
@@ -32,3 +37,17 @@ class ViewController: UIViewController {
 
 }
 
+struct CityModel {
+    let cityID: Int64
+    let cityName: String
+}
+
+extension CityModel: APIModelConvertible {
+    static func toModel(dic: [String : Any]) -> CityModel? {
+        guard let cityID = (dic["city_id"] as? NSNumber)?.int64Value, let cityName = dic["city_name"] as? String else {
+            return nil
+        }
+
+        return CityModel(cityID: cityID, cityName: cityName)
+    }
+}
