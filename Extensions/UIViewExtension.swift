@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension IronThrone where Base: UIView {
+extension IronThronePrefix where Base: UIView {
     /**
      移除所有子视图
      */

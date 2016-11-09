@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension IronThrone where Base: UIColor {
+extension IronThronePrefix where Base: UIColor {
 
     /**
      创建十六进制文本表示的 UIColor

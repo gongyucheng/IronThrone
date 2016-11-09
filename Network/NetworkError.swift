@@ -66,12 +66,12 @@ extension UserFriendlyError {
 }
 
 extension Error {
-    public var irt: IronThrone<Self> {
-        return IronThrone(base: self)
+    public var irt: IronThronePrefix<Self> {
+        return IronThronePrefix(base: self)
     }
 }
 
-extension IronThrone where Base: Error {
+extension IronThronePrefix where Base: Error {
     public var showableString: String {
         return (base as? UserFriendlyError)?.showableString ?? "未知错误"
     }

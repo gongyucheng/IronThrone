@@ -13,7 +13,7 @@ public protocol IronThroneCompatible {
     static var irt: IronThroneCompatibleType.Type { get }
 }
 
-public struct IronThrone<Base> {
+public struct IronThronePrefix<Base> {
     public let base: Base
 
     init(base: Base) {
@@ -22,12 +22,12 @@ public struct IronThrone<Base> {
 }
 
 public extension IronThroneCompatible where Self: NSObjectProtocol {
-    public var irt: IronThrone<Self> {
-        return IronThrone(base: self)
+    public var irt: IronThronePrefix<Self> {
+        return IronThronePrefix(base: self)
     }
 
-    public static var irt: IronThrone<Self>.Type {
-        return IronThrone.self
+    public static var irt: IronThronePrefix<Self>.Type {
+        return IronThronePrefix.self
     }
 }
 
