@@ -1,1 +1,1 @@
-github "ricebook/Alamofire" "serious"
+github "Alamofire/Alamofire" ~> 4.1
