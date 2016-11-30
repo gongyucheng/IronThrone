@@ -34,7 +34,26 @@ extension HttpResult {
         }
         return result
     }
+
 }
+
+extension HttpResult where T: Collection {
+    public func apiResultMap<U>(_ transform: (T) -> U?) -> HttpResult<U> {
+        let result: HttpResult<U>
+        switch self {
+        case let .success(value):
+            if let newValue = transform(value) {
+                result = .success(newValue)
+            } else {
+                result = .failure(NetworkError.dataFormatIncorrect)
+            }
+        case let .failure(error):
+            result = .failure(error)
+        }
+        return result
+    }
+}
+
 
 extension HttpResult {
     @discardableResult

@@ -20,9 +20,9 @@ class ViewController: UIViewController {
             , method: .get)
             .response { (result) in
                 result
-                    .flatMap(APIResult.Transformer.jsonToDicArray)
-                    .flatMap(APIResult.Transformer.dicArrayToAPIModelArray)
-                    .successHandler({ (cityList: [CityModel]) in
+                    .flatMap(Transformer.jsonToDicArray)
+                    .flatMap(ModelTransformer<CityModel>.dicArrayToAPIModelArray)
+                    .successHandler({ (cityList) in
                         print(cityList)
                     })
             }
