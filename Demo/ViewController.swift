@@ -25,6 +25,9 @@ class ViewController: UIViewController {
                     .successHandler({ (cityList) in
                         print(cityList)
                     })
+                    .failureHandler({ (error) in
+                        let a = error.irt.showableString
+                    })
             }
 
     }

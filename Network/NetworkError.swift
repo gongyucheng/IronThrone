@@ -66,13 +66,21 @@ extension UserFriendlyError {
 }
 
 extension Error {
-    public var irt: IronThronePrefix<Self> {
-        return IronThronePrefix(base: self)
+    public var irt: ErrorProxy {
+        return ErrorProxy(base: self)
     }
 }
 
-extension IronThronePrefix where Base: Error {
+public extension ErrorProxy {
     public var showableString: String {
         return (base as? UserFriendlyError)?.showableString ?? "未知错误"
     }
 }
+
+public struct ErrorProxy {
+    let base: Error
+    init(base: Error) {
+        self.base = base
+    }
+}
+
