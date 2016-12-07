@@ -9,15 +9,15 @@
 import Foundation
 
 extension NetworkError.APIServerError {
-    static var serverInternalError: NetworkError.APIServerError {
+    public static var serverInternalError: NetworkError.APIServerError {
         return NetworkError.APIServerError(code: 5000001)
     }
 
-    static var invalidParameter: NetworkError.APIServerError {
+    public static var invalidParameter: NetworkError.APIServerError {
         return NetworkError.APIServerError(code: 4000001)
     }
 
-    static var wrongHttpMethod: NetworkError.APIServerError {
+    public static var wrongHttpMethod: NetworkError.APIServerError {
         return NetworkError.APIServerError(code: 4050001)
     }
 }

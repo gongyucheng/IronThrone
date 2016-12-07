@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 
+// MARK: - Public Interface
 extension NetworkKit {
 
     @discardableResult
@@ -34,50 +35,81 @@ extension NetworkKit {
         , parameters: [String: Any]? = nil
         , headers: [String: String]? = nil) -> APIRequestable {
 
-        let hostAttributes: HostAttributes? = APIConfiguration.hostsAttributes[host]
+        let requestInfo = p_generateAPIRequestInfo(host: host, apiName: apiName)
 
-        let supportHttps = hostAttributes?.supportHttps ?? true
-        let httpDNSIP: String?
-        if let httpDNSType = hostAttributes?.httpDNSType, case let .httpDNS(ip) = httpDNSType {
-            httpDNSIP = ip
-        } else {
-            httpDNSIP = nil
-        }
-
-        let port = hostAttributes?.port ?? 80
-
-        let urlString = (supportHttps ? "https://" : "http://")
-            + (httpDNSIP == nil ? host : httpDNSIP! )
-            + (port == 80 ? "" : ":\(port)")
-            + "/"
-            + apiName
-
-        var finalHeaders = APIConfiguration.generalHttpHeader
-        if httpDNSIP != nil {
-            finalHeaders["HOST"] = host
-        }
-
-        // handle http header of trace ID.
-        if let traceIDFixedPart = APIConfiguration.traceIDFixedPart, !traceIDFixedPart.isEmpty {
-
-            let timestamp = Int64(Date().timeIntervalSince1970 * 1000)
-            let randomNum: Int64 = timestamp * 10000 + Int64(APIRequest.requestSequence % 10000)
-
-            finalHeaders["x-ricebook-trace"] = traceIDFixedPart + "-" + randomNum.irt.base36String
-
-            APIRequest.requestSequence += 1
-            if APIRequest.requestSequence >= 10000 {
-                APIRequest.requestSequence %= 10000
-            }
-        }
-
-        let result = APIRequest(method: method, urlString: urlString)
-        result.headers = finalHeaders
+        let result = APIRequest(method: method, urlString: requestInfo.wholeURLString)
+        result.headers = requestInfo.httpHeaders
         result.parameters = parameters
         
         return result
     }
+
+
+    public static func requestAPIByMultipart(apiHost host: String
+        , apiName: String
+        , multipartParameters: [String: Multipartable]
+        , fileListDic: [String: [Multipartable]] = [:]
+        , headers: [String: String]? = nil
+        , completionHandler: @escaping (HttpResult<Any>) -> Void) {
+
+        let requestInfo = p_generateAPIRequestInfo(host: host, apiName: apiName)
+
+        let group = APIRequest.networkGroup
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        group.enter()
+
+        shared.alamofireManager
+            .upload(multipartFormData: { (multipartFormData) in
+                for (key, value) in multipartParameters {
+                    let packetAttribute = value.packetAttribute()
+                    if let fileName = packetAttribute.fileName {
+                        if let mimeType = packetAttribute.mimeType {
+                            multipartFormData.append(packetAttribute.data
+                                , withName: key, fileName: fileName, mimeType: mimeType)
+                        }
+                    }else if let mimeType = packetAttribute.mimeType {
+                        multipartFormData.append(packetAttribute.data
+                            , withName: key, mimeType: mimeType)
+                    }else {
+                        multipartFormData.append(packetAttribute.data, withName: key)
+                    }
+
+                }
+
+                for (key, value) in fileListDic {
+                    for (index, item) in value.enumerated() {
+                        let packetAttribute = item.packetAttribute()
+                        let fileName = packetAttribute.fileName ?? "\(index)"
+                        let mimeType = packetAttribute.mimeType ?? "text/plain"
+                        multipartFormData.append(packetAttribute.data, withName: key
+                            , fileName: fileName, mimeType: mimeType)
+                    }
+                }
+            }
+            , to: requestInfo.wholeURLString
+            , headers: requestInfo.httpHeaders) { (encodingResult) in
+                switch encodingResult {
+                case .success(let upload, _ , _):
+                    upload.responseJSON { (response) in
+                        group.leave()
+
+                        let result = NetworkKit.handleAlamofireAPIResponse(jsonResponse: response)
+                        completionHandler(result)
+                    }
+                case .failure(_):
+                    group.leave()
+
+                    let error = HttpResult<Any>.failure(NetworkError.multipartDataEncodingIncorrect)
+                    completionHandler(error)
+                }
+        }
+        
+        group.notify(queue: DispatchQueue.main) {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
+    }
 }
+
 
 public class NetworkKit {
 
@@ -146,6 +178,71 @@ public class NetworkKit {
         NetworkError.APIServerError.wrongHttpMethod.errorCode: "接口请求方式错误",
     ]
 
+}
+
+extension NetworkKit {
+
+    static func handleAlamofireAPIResponse(jsonResponse: DataResponse<Any>) -> HttpResult<Any> {
+        let result: HttpResult<Any>
+        switch jsonResponse.result {
+        case let .success(json):
+            result = HttpResult.success(json)
+        case let .failure(error):
+            if let serverErrorInfo = jsonResponse.data?.irt.toJsonObject() as? [String: Any]
+                , let errorCode = serverErrorInfo["error_code"] as? Int {
+                let displayMsg = serverErrorInfo["display_msg"] as? String
+                let serverError = NetworkError.APIServerError(code: errorCode,
+                                                              displayMsg: displayMsg)
+                result = HttpResult.failure(serverError)
+            } else {
+                result = HttpResult.failure(error)
+            }
+        }
+
+        return result
+    }
+
+    fileprivate static func p_generateAPIRequestInfo(host: String, apiName: String)
+    -> (wholeURLString: String, httpHeaders:[String: String]) {
+        let hostAttributes: HostAttributes? = APIConfiguration.hostsAttributes[host]
+
+        let supportHttps = hostAttributes?.supportHttps ?? true
+        let httpDNSIP: String?
+        if let httpDNSType = hostAttributes?.httpDNSType, case let .httpDNS(ip) = httpDNSType {
+            httpDNSIP = ip
+        } else {
+            httpDNSIP = nil
+        }
+
+        let port = hostAttributes?.port ?? 80
+
+        let urlString = (supportHttps ? "https://" : "http://")
+            + (httpDNSIP == nil ? host : httpDNSIP! )
+            + (port == 80 ? "" : ":\(port)")
+            + "/"
+            + apiName
+
+        var finalHeaders = APIConfiguration.generalHttpHeader
+        if httpDNSIP != nil {
+            finalHeaders["HOST"] = host
+        }
+
+        // handle http header of trace ID.
+        if let traceIDFixedPart = APIConfiguration.traceIDFixedPart, !traceIDFixedPart.isEmpty {
+
+            let timestamp = Int64(Date().timeIntervalSince1970 * 1000)
+            let randomNum: Int64 = timestamp * 10000 + Int64(APIRequest.requestSequence % 10000)
+
+            finalHeaders["x-ricebook-trace"] = traceIDFixedPart + "-" + randomNum.irt.base36String
+
+            APIRequest.requestSequence += 1
+            if APIRequest.requestSequence >= 10000 {
+                APIRequest.requestSequence %= 10000
+            }
+        }
+
+        return (urlString, finalHeaders)
+    }
 }
 
 /// 判断网络状态
