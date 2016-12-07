@@ -26,7 +26,22 @@ public enum NetworkError: Int {
 
     public struct APIServerError: UserFriendlyError {
         public var showableString: String {
-            return displayMsg ?? "未知错误"
+            /*
+             用户可见的错误信息显示优先级：
+             
+                1. 服务器返回的用户显示错误信息
+                2. App 中定义的错误码转换字典
+                3. 默认错误信息： 未知错误
+             */
+            var result: String?
+
+            result = displayMsg
+
+            if result == nil {
+                result = NetworkKit.errorCodeMapDic[errorCode]
+            }
+
+            return result ?? "未知错误"
         }
 
         public let errorCode: Int
@@ -61,7 +76,7 @@ public protocol UserFriendlyError: Error {
 
 extension UserFriendlyError {
     public var showableString: String {
-        return "未知错误"
+        return  NetworkKit.errorCodeMapDic[errorCode] ?? "未知错误"
     }
 }
 

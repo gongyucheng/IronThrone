@@ -186,17 +186,28 @@ extension NetworkKit {
         let result: HttpResult<Any>
         switch jsonResponse.result {
         case let .success(json):
-            result = HttpResult.success(json)
-        case let .failure(error):
-            if let serverErrorInfo = jsonResponse.data?.irt.toJsonObject() as? [String: Any]
-                , let errorCode = serverErrorInfo["error_code"] as? Int {
-                let displayMsg = serverErrorInfo["display_msg"] as? String
-                let serverError = NetworkError.APIServerError(code: errorCode,
-                                                              displayMsg: displayMsg)
-                result = HttpResult.failure(serverError)
+            if jsonResponse.response?.statusCode == 200 {
+                // 成功
+                result = .success(json)
             } else {
-                result = HttpResult.failure(error)
+                print("IronThrone log: Request failure, do you need more info??")
+
+                if let serverErrorInfo = jsonResponse.data?.irt.toJsonObject() as? [String: Any]
+                , let errorCode = serverErrorInfo["error_code"] as? Int {
+                    let displayMsg = serverErrorInfo["display_msg"] as? String
+                    let serverError = NetworkError.APIServerError(code: errorCode,
+                                                                  displayMsg: displayMsg)
+                    result = .failure(serverError)
+                } else {
+                    result = .failure(NetworkError.dataFormatIncorrect)
+                }
+
             }
+        case let .failure(error):
+            // 服务器返回数据非 json 格式
+            result = .failure(NetworkError.dataFormatIncorrect)
+
+            print("IronThrone log: The response data of API is not Json format.")
         }
 
         return result
