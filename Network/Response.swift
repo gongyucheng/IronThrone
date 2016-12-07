@@ -25,8 +25,11 @@ extension HttpRequestable {
     public func response(completionHandler: @escaping (HttpResult<Any>) -> Void) {
         // TODO: mock feature
 
-        // TODO: network check feature
-
+        // Network check feature
+        if !isNetworkReachable() {
+            completionHandler(.failure(NetworkError.noAvaliableNetwork))
+            return
+        }
 
         // request network
         let request = NetworkKit.shared.alamofireManager
@@ -152,7 +155,8 @@ extension NetworkKit {
                         let packetAttribute = item.packetAttribute()
                         let fileName = packetAttribute.fileName ?? "\(index)"
                         let mimeType = packetAttribute.mimeType ?? "text/plain"
-                        multipartFormData.append(packetAttribute.data, withName: key, fileName: fileName, mimeType: mimeType)
+                        multipartFormData.append(packetAttribute.data, withName: key
+                            , fileName: fileName, mimeType: mimeType)
                     }
                 }
             }, to: urlString, headers: finalHeaders) { (encodingResult) in
@@ -166,11 +170,12 @@ extension NetworkKit {
                         case let .success(json):
                             result = HttpResult.success(json)
                         case let .failure(error):
-                            if let serverErrorInfo = response.data?.irt.toJsonObject() as? [String: Any]
+                            if let serverErrorInfo = response.data?.irt.toJsonObject()
+                                as? [String: Any]
                             , let errorCode = serverErrorInfo["error_code"] as? Int {
                                 let displayMsg = serverErrorInfo["display_msg"] as? String
-                                let serverError = NetworkError.APIServerError(code: errorCode,
-                                                                              displayMsg: displayMsg)
+                                let serverError = NetworkError.APIServerError(code: errorCode
+                                    , displayMsg: displayMsg)
                                 result = HttpResult.failure(serverError)
                             } else {
                                 result = HttpResult.failure(error)

@@ -117,8 +117,20 @@ public class NetworkKit {
                 let serverTrustPolicyMananger = ServerTrustPolicyManager(policies: policies)
 
                 NetworkKit.shared.alamofireManager.session.finishTasksAndInvalidate()
-                NetworkKit.shared.alamofireManager =
-                    SessionManager(serverTrustPolicyManager: serverTrustPolicyMananger)
+                let manager = SessionManager(serverTrustPolicyManager: serverTrustPolicyMananger)
+                manager.delegate.taskWillPerformHTTPRedirection = {
+                    session, task, response, request in
+                    var redirectRequest = request
+
+                    if let redirectURL = request.url {
+                        // 去掉所有的 redirect 请求中带有的原始请求里自定义的 http header
+                        redirectRequest = URLRequest(url: redirectURL)
+                    }
+
+                    return redirectRequest
+                }
+                NetworkKit.shared.alamofireManager = manager
+
             }
         }
     }
@@ -136,4 +148,20 @@ public class NetworkKit {
 
 }
 
+/// 判断网络状态
+public let reachability = Reachability()
 
+public func isNetworkReachable() -> Bool {
+    // Default is true in case of can not initialize the reachability.
+    var result = true
+
+    if let tmp = reachability {
+        if !tmp.isReachable {
+            result = false
+        }
+    }else {
+        print("IronThrone Log: Reachability is not initialized.")
+    }
+
+    return result
+}

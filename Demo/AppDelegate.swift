@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         var hostAttribute = HostAttributes()
-        hostAttribute.httpDNSType = .httpDNS("106.75.52.20")
+        hostAttribute.httpDNSType = .httpDNS("106.75.20.185")
         NetworkKit.APIConfiguration.hostsAttributes["opentest.seriousapps.cn"] = hostAttribute
 
         return true
