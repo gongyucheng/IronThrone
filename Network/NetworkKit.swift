@@ -12,7 +12,6 @@ import Alamofire
 // MARK: - Public Interface
 extension NetworkKit {
 
-    @discardableResult
     public static func requestHttp(url: URL
         , method: HttpMethod
         , parameters: [String: Any]? = nil
@@ -28,18 +27,19 @@ extension NetworkKit {
         return result
     }
 
-    @discardableResult
     public static func requestAPI(apiHost host: String
         , apiName: String
         , method: HttpMethod
         , parameters: [String: Any]? = nil
-        , headers: [String: String]? = nil) -> APIRequestable {
+        , headers: [String: String]? = nil
+        , extraInfo: [String: Any]? = nil) -> APIRequestable {
 
         let requestInfo = p_generateAPIRequestInfo(host: host, apiName: apiName)
 
         let result = APIRequest(method: method, urlString: requestInfo.wholeURLString)
         result.headers = requestInfo.httpHeaders
         result.parameters = parameters
+        result.extraInfo = extraInfo
         
         return result
     }
@@ -122,6 +122,11 @@ public class NetworkKit {
 
     /// API 配置相关
     public struct APIConfiguration {
+
+        /// API 接口请求的统一回调处理
+        public static var generalResponseCallback:
+            ((APIRequestable, HttpResult<Any>, HTTPURLResponse?) -> Void)? = nil
+
         /// 通用 API 请求 HTTP Header
         public static var generalHttpHeader: [String: String] = [:]
         /// API 请求头部附带 trace 信息的固定部分。对 Daenerys 来说就是 deviceID
@@ -203,7 +208,7 @@ extension NetworkKit {
                 }
 
             }
-        case let .failure(error):
+        case .failure(_):
             // 服务器返回数据非 json 格式
             result = .failure(NetworkError.dataFormatIncorrect)
 

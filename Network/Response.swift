@@ -52,6 +52,11 @@ extension HttpRequestable {
                 group.leave()
                 let result = NetworkKit.handleAlamofireAPIResponse(jsonResponse: response)
                 completionHandler(result)
+
+                if let apiRequest = self as? APIRequestable {
+                    NetworkKit.APIConfiguration
+                        .generalResponseCallback?(apiRequest, result, response.response)
+                }
             }
 
             group.notify(queue: DispatchQueue.main) {
