@@ -9,6 +9,13 @@
 import UIKit
 import Alamofire
 
+public struct HttpDataResponse {
+    public let request: URLRequest?
+    public let response: HTTPURLResponse?
+    public let data: Data?
+    public let error: Error?
+}
+
 extension HttpMethod {
     fileprivate func convertToAlamofireHttpMethod() -> Alamofire.HTTPMethod {
         switch self {
@@ -32,13 +39,6 @@ extension HttpRequestable {
         }
 
         // request network
-        let request = NetworkKit.shared.alamofireManager
-            .request(urlString
-                , method: method.convertToAlamofireHttpMethod()
-                , parameters: parameters
-                , encoding: URLEncoding.default
-                , headers: headers)
-
         let apiNetworkGroup = (self as? APIRequestable)
             .flatMap{ type(of: $0) }?
             .networkGroup
@@ -48,6 +48,12 @@ extension HttpRequestable {
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
             group.enter()
 
+            let request = NetworkKit.shared.alamofireManager
+                .request(urlString
+                    , method: method.convertToAlamofireHttpMethod()
+                    , parameters: parameters
+                    , encoding: URLEncoding.default
+                    , headers: headers)
             request.responseJSON { (response) in
                 group.leave()
                 let result = NetworkKit.handleAlamofireAPIResponse(jsonResponse: response)
@@ -64,8 +70,17 @@ extension HttpRequestable {
             }
         } else {
             // 非 API 的 HTTP 请求
+            let request = Alamofire.request(urlString
+                , method: method.convertToAlamofireHttpMethod()
+                , parameters: parameters
+                , encoding: URLEncoding.default
+                , headers: headers)
             request.response { (dataResponse) in
-
+                let response = HttpDataResponse(request: dataResponse.request
+                    , response: dataResponse.response
+                    , data: dataResponse.data
+                    , error: dataResponse.error)
+                completionHandler(.success(response))
             }
         }
 

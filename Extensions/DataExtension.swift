@@ -48,6 +48,12 @@ extension DataProxy {
             return nil
         }
     }
+
+    func toBytes() -> UnsafePointer<UInt8> {
+        return base.withUnsafeBytes({ (data: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
+            return data
+        })
+    }
 }
 
 extension Data: IronThroneCompatible {
