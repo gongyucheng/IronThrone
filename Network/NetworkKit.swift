@@ -17,14 +17,54 @@ extension NetworkKit {
         , parameters: [String: Any]? = nil
         , headers: [String: String]? = nil) -> HttpRequestable {
 
-        // TODO: 检查是否 http 或者 https
+        let request = HttpRequest(method: method, urlString: url.absoluteString)
+        request.headers = headers
+        request.parameters = parameters
 
+        return request
+    }
 
-        let result = HttpRequest(method: method, urlString: url.absoluteString)
-        result.headers = headers
-        result.parameters = parameters
+    public static func requestHttpWithJsonEncoding(url: URL
+        , method: HttpMethod
+        , parameters: [String: Any]? = nil
+        , headers: [String: String]? = nil) -> HttpRequestable {
 
-        return result
+        let request = HttpRequest(method: method, urlString: url.absoluteString)
+        request.headers = headers
+        request.parameters = parameters
+        request.parameterEncodingType = .json
+
+        return request
+    }
+
+    public static func httpDownload(sourceHttpUrl: URL
+        , destinationFileURL: URL
+        , method: HttpMethod
+        , parameters: [String: Any]? = nil
+        , headers: [String: String]? = nil
+        , downloadProgress: @escaping (Int64, Int64) -> Void = {_,_ in } ) -> HttpRequestable {
+
+        let downloadInfo = HttpDownloadRequestInfo(destinationFileURL: destinationFileURL
+            , downloadProgress: downloadProgress)
+
+        let request = HttpRequest(method: method, urlString: sourceHttpUrl.absoluteString)
+        request.headers = headers
+        request.parameters = parameters
+        request.requestType = .httpDownload(downloadInfo)
+
+        return request
+
+    }
+
+    public static func httpUpload(data: Data
+        , to url: URL
+        , method: HttpMethod
+        , headers: [String: String]? = nil) -> HttpRequestable {
+        let request = HttpRequest(method: method, urlString: url.absoluteString)
+        request.headers = headers
+        request.requestType = .upload(data)
+        
+        return request
     }
 
     public static func requestAPI(apiHost host: String
@@ -32,16 +72,18 @@ extension NetworkKit {
         , method: HttpMethod
         , parameters: [String: Any]? = nil
         , headers: [String: String]? = nil
-        , extraInfo: [String: Any]? = nil) -> APIRequestable {
+        , extraInfo: [String: Any]? = nil) -> HttpRequestable {
 
         let requestInfo = p_generateAPIRequestInfo(host: host, apiName: apiName)
 
-        let result = APIRequest(method: method, urlString: requestInfo.wholeURLString)
-        result.headers = requestInfo.httpHeaders
-        result.parameters = parameters
-        result.extraInfo = extraInfo
-        
-        return result
+        let apiInfo = APIRequestInfo(extraInfo: extraInfo)
+
+        let request = HttpRequest(method: method, urlString: requestInfo.wholeURLString)
+        request.headers = requestInfo.httpHeaders
+        request.parameters = parameters
+        request.requestType = .api(apiInfo)
+
+        return request
     }
 
 
@@ -49,64 +91,17 @@ extension NetworkKit {
         , apiName: String
         , multipartParameters: [String: Multipartable]
         , fileListDic: [String: [Multipartable]] = [:]
-        , headers: [String: String]? = nil
-        , completionHandler: @escaping (HttpResult<Any>) -> Void) {
+        , headers: [String: String]? = nil ) -> HttpRequestable {
+
+        let multipartInfo = APIMultipartRequestInfo(multipartParameters: multipartParameters
+            , fileListDic: fileListDic)
 
         let requestInfo = p_generateAPIRequestInfo(host: host, apiName: apiName)
+        let request = HttpRequest(method: .post, urlString: requestInfo.wholeURLString)
+        request.headers = requestInfo.httpHeaders
+        request.requestType = .apiMultipart(multipartInfo)
 
-        let group = APIRequest.networkGroup
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        group.enter()
-
-        shared.alamofireManager
-            .upload(multipartFormData: { (multipartFormData) in
-                for (key, value) in multipartParameters {
-                    let packetAttribute = value.packetAttribute()
-                    if let fileName = packetAttribute.fileName {
-                        if let mimeType = packetAttribute.mimeType {
-                            multipartFormData.append(packetAttribute.data
-                                , withName: key, fileName: fileName, mimeType: mimeType)
-                        }
-                    }else if let mimeType = packetAttribute.mimeType {
-                        multipartFormData.append(packetAttribute.data
-                            , withName: key, mimeType: mimeType)
-                    }else {
-                        multipartFormData.append(packetAttribute.data, withName: key)
-                    }
-
-                }
-
-                for (key, value) in fileListDic {
-                    for (index, item) in value.enumerated() {
-                        let packetAttribute = item.packetAttribute()
-                        let fileName = packetAttribute.fileName ?? "\(index)"
-                        let mimeType = packetAttribute.mimeType ?? "text/plain"
-                        multipartFormData.append(packetAttribute.data, withName: key
-                            , fileName: fileName, mimeType: mimeType)
-                    }
-                }
-            }
-            , to: requestInfo.wholeURLString
-            , headers: requestInfo.httpHeaders) { (encodingResult) in
-                switch encodingResult {
-                case .success(let upload, _ , _):
-                    upload.responseJSON { (response) in
-                        group.leave()
-
-                        let result = NetworkKit.handleAlamofireAPIResponse(jsonResponse: response)
-                        completionHandler(result)
-                    }
-                case .failure(_):
-                    group.leave()
-
-                    let error = HttpResult<Any>.failure(NetworkError.multipartDataEncodingIncorrect)
-                    completionHandler(error)
-                }
-        }
-        
-        group.notify(queue: DispatchQueue.main) {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
+        return request
     }
 }
 
@@ -119,13 +114,16 @@ public class NetworkKit {
     }
 
     var alamofireManager = SessionManager()
+    static let networkGroup: DispatchGroup = DispatchGroup()
 
     /// API 配置相关
     public struct APIConfiguration {
 
+        static var requestSequence: Int = 0
+
         /// API 接口请求的统一回调处理
         public static var generalResponseCallback:
-            ((APIRequestable, HttpResult<Any>, HTTPURLResponse?) -> Void)? = nil
+            ((HttpRequestable, HttpResult<Any>, HTTPURLResponse?) -> Void)? = nil
 
         /// 通用 API 请求 HTTP Header
         public static var generalHttpHeader: [String: String] = [:]
@@ -247,13 +245,14 @@ extension NetworkKit {
         if let traceIDFixedPart = APIConfiguration.traceIDFixedPart, !traceIDFixedPart.isEmpty {
 
             let timestamp = Int64(Date().timeIntervalSince1970 * 1000)
-            let randomNum: Int64 = timestamp * 10000 + Int64(APIRequest.requestSequence % 10000)
+            let randomNum: Int64 =
+                timestamp * 10000 + Int64(NetworkKit.APIConfiguration.requestSequence % 10000)
 
             finalHeaders["x-ricebook-trace"] = traceIDFixedPart + "-" + randomNum.irt.base36String
 
-            APIRequest.requestSequence += 1
-            if APIRequest.requestSequence >= 10000 {
-                APIRequest.requestSequence %= 10000
+            NetworkKit.APIConfiguration.requestSequence += 1
+            if NetworkKit.APIConfiguration.requestSequence >= 10000 {
+                NetworkKit.APIConfiguration.requestSequence %= 10000
             }
         }
 

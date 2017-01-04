@@ -1,5 +1,5 @@
 //
-//  APIResultTransformer.swift
+//  HttpResultTransformer.swift
 //  IronThrone
 //
 //  Created by Carl Chen on 10/11/16.
@@ -63,6 +63,26 @@ public struct Transformer {
             }
 
             return HttpResult.success((isSuccess: isSuccess, responseDic: resultDic))
+        }
+    }
+
+    public static var httpResponseToJson: (HttpResponseSuccess) -> HttpResult<Any> {
+        return { response in
+            guard let data = response.data, let jsonObject = data.irt.toJsonObject() else {
+                return .failure(NetworkError.dataFormatIncorrect)
+            }
+
+            return .success(jsonObject)
+        }
+    }
+
+    public static var toHttpResponse: (Any) -> HttpResult<HttpResponseSuccess> {
+        return { response in
+            guard let result = response as? HttpResponseSuccess else {
+                return .failure(NetworkError.dataFormatIncorrect)
+            }
+
+            return .success(result)
         }
     }
 }

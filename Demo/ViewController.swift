@@ -15,27 +15,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        NetworkKit.requestAPI(apiHost: "opentest.seriousapps.cn"
-            , apiName: "hub/home/v1/home/page.json?city=140&index=1&lat=39.96159399389649&lng=116.4586765859375"
-            , method: .get, parameters: nil, headers: nil)
-            .response { (result) in
-                print(result)
-            }
-
 //        NetworkKit.requestAPI(apiHost: "opentest.seriousapps.cn"
-//            , apiName: "3/deal/list_channel.json"
-//            , method: .get)
+//            , apiName: "hub/home/v1/home/page.json?city=140&index=1&lat=39.96159399389649&lng=116.4586765859375"
+//            , method: .get, parameters: nil, headers: nil)
 //            .response { (result) in
-//                result
-//                    .flatMap(Transformer.jsonToDicArray)
-//                    .flatMap(ModelTransformer<CityModel>.dicArrayToAPIModelArray)
-//                    .successHandler({ (cityList) in
-//                        print(cityList)
-//                    })
-//                    .failureHandler({ (error) in
-//                        let a = error.irt.showableString
-//                    })
+//                print(result)
 //            }
+
+        NetworkKit.requestAPI(apiHost: "opentest.seriousapps.cn"
+            , apiName: "3/deal/list_channel.json"
+            , method: .get)
+            .response { (result) in
+                result
+                    .flatMap(Transformer.jsonToDicArray)
+                    .flatMap(ModelTransformer<CityModel>.dicArrayToAPIModelArray)
+                    .successHandler({ (cityList) in
+                        print(cityList)
+                    })
+                    .failureHandler({ (error) in
+//                        let a = error.irt.showableString
+                    })
+            }
 
     }
 

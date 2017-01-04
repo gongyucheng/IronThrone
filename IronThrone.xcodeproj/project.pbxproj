@@ -10,7 +10,7 @@
 		C30176F31DA9FCF3008DD05B /* NetworkEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */; };
 		C30176F51DAA0280008DD05B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F41DAA0280008DD05B /* Request.swift */; };
 		C30176F71DAA028D008DD05B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F61DAA028D008DD05B /* Response.swift */; };
-		C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F81DACAE71008DD05B /* APIResultTransformer.swift */; };
+		C30176F91DACAE71008DD05B /* HttpResultTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30176F81DACAE71008DD05B /* HttpResultTransformer.swift */; };
 		C33771881DF7D26600FE60EC /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33771871DF7D26600FE60EC /* Reachability.swift */; };
 		C39FA5DC1DD0667E0088B389 /* Int64Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39FA5DB1DD0667E0088B389 /* Int64Extension.swift */; };
 		C3B1407D1DB76AD000D4B3EF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1407C1DB76AD000D4B3EF /* AppDelegate.swift */; };
@@ -73,7 +73,7 @@
 		C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEnums.swift; sourceTree = "<group>"; };
 		C30176F41DAA0280008DD05B /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C30176F61DAA028D008DD05B /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		C30176F81DACAE71008DD05B /* APIResultTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResultTransformer.swift; sourceTree = "<group>"; };
+		C30176F81DACAE71008DD05B /* HttpResultTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpResultTransformer.swift; sourceTree = "<group>"; };
 		C33771871DF7D26600FE60EC /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C39FA5DB1DD0667E0088B389 /* Int64Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Int64Extension.swift; sourceTree = "<group>"; };
 		C3B1407A1DB76AD000D4B3EF /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,10 +218,10 @@
 		C3DAFCF41D8E8CAB00F83608 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				C3DAFCF91D8E97A500F83608 /* HttpResult.swift */,
-				C30176F81DACAE71008DD05B /* APIResultTransformer.swift */,
-				C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */,
 				C3DAFCFB1D8E98DA00F83608 /* NetworkKit.swift */,
+				C3DAFCF91D8E97A500F83608 /* HttpResult.swift */,
+				C30176F81DACAE71008DD05B /* HttpResultTransformer.swift */,
+				C30176F21DA9FCF3008DD05B /* NetworkEnums.swift */,
 				C30176F41DAA0280008DD05B /* Request.swift */,
 				C30176F61DAA028D008DD05B /* Response.swift */,
 				C3C495781DCC824700305B17 /* NetworkError.swift */,
@@ -398,7 +398,7 @@
 				C33771881DF7D26600FE60EC /* Reachability.swift in Sources */,
 				C30176F71DAA028D008DD05B /* Response.swift in Sources */,
 				C30176F51DAA0280008DD05B /* Request.swift in Sources */,
-				C30176F91DACAE71008DD05B /* APIResultTransformer.swift in Sources */,
+				C30176F91DACAE71008DD05B /* HttpResultTransformer.swift in Sources */,
 				C3C495791DCC824700305B17 /* NetworkError.swift in Sources */,
 				C3DAFCF61D8E8CEF00F83608 /* IronThrone.swift in Sources */,
 				C3DAFCF81D8E8E5700F83608 /* UIColorExtension.swift in Sources */,
@@ -459,6 +459,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricebook.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -477,6 +478,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricebook.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
