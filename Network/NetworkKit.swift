@@ -119,11 +119,18 @@ public class NetworkKit {
     /// API 配置相关
     public struct APIConfiguration {
 
+        public struct ResponseData {
+            let request: HttpRequestable
+            let result: HttpResult<Any>
+            let response: HTTPURLResponse?
+            /// 请求耗时，单位毫秒
+            let requestTimeSpent: Int64
+        }
+
         static var requestSequence: Int = 0
 
         /// API 接口请求的统一回调处理
-        public static var generalResponseCallback:
-            ((HttpRequestable, HttpResult<Any>, HTTPURLResponse?) -> Void)? = nil
+        public static var generalResponseCallback: ((ResponseData) -> Void)? = nil
 
         /// 通用 API 请求 HTTP Header
         public static var generalHttpHeader: [String: String] = [:]

@@ -117,16 +117,23 @@ extension HttpRequestable {
                     , parameters: parameters
                     , encoding: parameterEncodingType.convertToAlamofireEncoding()
                     , headers: headers)
+            let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             request.responseJSON { (response) in
+                let requestCostTime = Date.irt.millisecondTimestamp - apiRequestStartTimestamp
                 handleNetworkGroup()
                 let result = NetworkKit.handleAlamofireAPIResponse(jsonResponse: response)
                 completionHandler(result)
 
-                NetworkKit.APIConfiguration
-                    .generalResponseCallback?(self, result, response.response)
+                let responseData = NetworkKit.APIConfiguration
+                    .ResponseData(request: self
+                        , result: result
+                        , response: response.response
+                        , requestTimeSpent: requestCostTime)
+                NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
             }
         case let .apiMultipart(multipartInfo):
 
+            var apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             NetworkKit.shared.alamofireManager
                 .upload(multipartFormData: { (multipartFormData) in
                     for (key, value) in multipartInfo.multipartParameters {
@@ -157,22 +164,51 @@ extension HttpRequestable {
                 }
                 , to: urlString
                 , headers: headers) { (encodingResult) in
+
+
                     switch encodingResult {
                     case .success(let upload, _ , _):
+                        // 开始发送网络请求
+                        // 网络耗时统计不计算 encoding data 的部分
+                        apiRequestStartTimestamp = Date.irt.millisecondTimestamp
                         upload.responseJSON { (response) in
+                            let requestCostTime = Date.irt.millisecondTimestamp
+                                - apiRequestStartTimestamp
+
                             handleNetworkGroup()
 
                             let result =
                                 NetworkKit.handleAlamofireAPIResponse(jsonResponse: response)
                             completionHandler(result)
+
+                            let responseData = NetworkKit.APIConfiguration
+                                .ResponseData(request: self
+                                    , result: result
+                                    , response: response.response
+                                    , requestTimeSpent: requestCostTime)
+                            NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
                         }
                     case .failure(_):
+                        // multipart 数据 encoding 错误
+                        let encodingCostTime = Date.irt.millisecondTimestamp
+                            - apiRequestStartTimestamp
+
                         handleNetworkGroup()
                         
                         let error =
                             HttpResult<Any>.failure(NetworkError.multipartDataEncodingIncorrect)
                         completionHandler(error)
+
+
+                        let responseData = NetworkKit.APIConfiguration
+                            .ResponseData(request: self
+                                , result: error
+                                , response: nil
+                                , requestTimeSpent: encodingCostTime)
+                        NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
+
                     }
+
                 }
 
         case let .httpDownload(downloadInfo):
