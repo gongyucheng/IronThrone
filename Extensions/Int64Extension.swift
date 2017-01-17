@@ -9,7 +9,7 @@
 import Foundation
 
 extension Int64Proxy {
-    var base36String: String {
+    public var base36String: String {
         var charArray: [Character] = []
 
         let base36 = "0123456789abcdefghijklmnopqrstuvwxyz"

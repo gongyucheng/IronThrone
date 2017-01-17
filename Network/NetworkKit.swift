@@ -136,6 +136,12 @@ public class NetworkKit {
         public static var generalHttpHeader: [String: String] = [:]
         /// API 请求头部附带 trace 信息的固定部分。对 Daenerys 来说就是 deviceID
         public static var traceIDFixedPart: String?
+        public static var traceIDRandomPart: String {
+            let timestamp = Int64(Date().timeIntervalSince1970 * 1000)
+            let randomNum: Int64 =
+                timestamp * 10000 + Int64(NetworkKit.APIConfiguration.requestSequence % 10000)
+            return randomNum.irt.base36String
+        }
         /// API 服务器属性信息
         public static var hostsAttributes: [String: HostAttributes] = [:] {
             didSet {
@@ -250,12 +256,9 @@ extension NetworkKit {
 
         // handle http header of trace ID.
         if let traceIDFixedPart = APIConfiguration.traceIDFixedPart, !traceIDFixedPart.isEmpty {
-
-            let timestamp = Int64(Date().timeIntervalSince1970 * 1000)
-            let randomNum: Int64 =
-                timestamp * 10000 + Int64(NetworkKit.APIConfiguration.requestSequence % 10000)
-
-            finalHeaders["x-ricebook-trace"] = traceIDFixedPart + "-" + randomNum.irt.base36String
+            finalHeaders["x-ricebook-trace"] = traceIDFixedPart
+                + "-"
+                + APIConfiguration.traceIDRandomPart
 
             NetworkKit.APIConfiguration.requestSequence += 1
             if NetworkKit.APIConfiguration.requestSequence >= 10000 {
