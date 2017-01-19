@@ -9,13 +9,6 @@
 import UIKit
 import Alamofire
 
-public struct HttpDataResponse {
-    public let request: URLRequest?
-    public let response: HTTPURLResponse?
-    public let data: Data?
-    public let error: Error?
-}
-
 public class HttpBaseResponse {
     public let request: URLRequest?
     public let response: HTTPURLResponse?

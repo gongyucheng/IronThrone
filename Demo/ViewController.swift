@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 //                print(result)
 //            }
 
-        NetworkKit.requestAPI(apiHost: "opentest.seriousapps.cn"
+        NetworkKit.requestAPI(apiHost: "open.seriousapps.cn"
             , apiName: "3/deal/list_channel.json"
             , method: .get)
             .response { (result) in

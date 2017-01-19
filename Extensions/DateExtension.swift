@@ -9,7 +9,7 @@
 import Foundation
 
 extension DateProxy {
-    static var millisecondTimestamp: Int64 {
+    public static var millisecondTimestamp: Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
 

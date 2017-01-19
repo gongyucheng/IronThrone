@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        var hostAttribute = HostAttributes()
-        hostAttribute.httpDNSType = .httpDNS("106.75.20.185")
+        let hostAttribute = HostAttributes()
+//        hostAttribute.httpDNSType = .httpDNS("106.75.20.185")
         NetworkKit.APIConfiguration.hostsAttributes["opentest.seriousapps.cn"] = hostAttribute
 
         return true

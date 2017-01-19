@@ -120,11 +120,11 @@ public class NetworkKit {
     public struct APIConfiguration {
 
         public struct ResponseData {
-            let request: HttpRequestable
-            let result: HttpResult<Any>
-            let response: HTTPURLResponse?
+            public let request: HttpRequestable
+            public let result: HttpResult<Any>
+            public let response: HTTPURLResponse?
             /// 请求耗时，单位毫秒
-            let requestTimeSpent: Int64
+            public let requestTimeSpent: Int64
         }
 
         static var requestSequence: Int = 0
