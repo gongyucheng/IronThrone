@@ -50,7 +50,7 @@ extension NamespaceWrapper where T == Data {
         }
     }
 
-    func toBytes() -> UnsafePointer<UInt8> {
+    public func toBytes() -> UnsafePointer<UInt8> {
         return wrappedValue
             .withUnsafeBytes({ (data: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
                 return data

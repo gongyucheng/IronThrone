@@ -10,6 +10,18 @@ import UIKit
 
 extension UIView: NamespaceWrappable {}
 extension NamespaceWrapper where T: UIView {
+    
+    public var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = wrappedValue
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+
     /**
      移除所有子视图
      */

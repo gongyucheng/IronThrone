@@ -8,9 +8,9 @@
 import Foundation
 
 public protocol NamespaceWrappable {
-    associatedtype WrapperType
-    var irt: WrapperType { get }
-    static var irt: WrapperType.Type { get }
+    associatedtype IronThroneWrapperType
+    var irt: IronThroneWrapperType { get }
+    static var irt: IronThroneWrapperType.Type { get }
 }
 
 public extension NamespaceWrappable {

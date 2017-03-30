@@ -29,48 +29,37 @@ extension NamespaceWrapper where T: UIColor {
             alphaValue = alpha
         }
 
-        var colorText = hex
+        var hexColorText = hex
             .lowercased()
             .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
-        switch colorText {
+        switch hexColorText {
         case let text where text.hasPrefix("0x"):
-            colorText = text.substring(from: text.characters.index(text.startIndex, offsetBy: 2))
+            hexColorText = text.irt.substring(from: 2)
 
         case let text where text.hasPrefix("#"):
-            colorText = text.substring(from: text.characters.index(text.startIndex, offsetBy: 1))
+            hexColorText = text.irt.substring(from: 1)
         default:
             break
         }
 
-        guard colorText.characters.count == 6 else {
+        guard hexColorText.irt.match(regex: "[0-9a-f]{6}") else {
             return defaultColor
         }
 
-        // TODO: 下面这段代码应该是可以优化的
-        var startIndex = colorText.startIndex
-        var endIndex = colorText.characters.index(startIndex, offsetBy: 2)
-
-        let rString = colorText.substring(with: Range(uncheckedBounds: (startIndex, endIndex)))
-
-        startIndex = endIndex
-        endIndex = colorText.characters.index(startIndex, offsetBy: 2)
-
-        let gString = colorText.substring(with: Range(uncheckedBounds: (startIndex, endIndex)))
-
-        startIndex = endIndex
-        endIndex = colorText.characters.index(startIndex, offsetBy: 2)
-
-        let bString = colorText.substring(with: Range(uncheckedBounds: (startIndex, endIndex)))
 
         var r: UInt32 = 0
         var g: UInt32 = 0
         var b: UInt32 = 0
-        Scanner(string: rString as String).scanHexInt32(&r)
-        Scanner(string: gString as String).scanHexInt32(&g)
-        Scanner(string: bString as String).scanHexInt32(&b)
 
-        return T(red: CGFloat(r) / 255.0
+        guard Scanner(string: hexColorText.irt.substring(with: 0..<2)).scanHexInt32(&r)
+            , Scanner(string: hexColorText.irt.substring(with: 2..<4)).scanHexInt32(&g)
+            , Scanner(string: hexColorText.irt.substring(with: 4..<6)).scanHexInt32(&b)
+            else {
+                return defaultColor
+        }
+
+        return UIColor(red: CGFloat(r) / 255.0
             , green: CGFloat(g) / 255.0
             , blue: CGFloat(b) / 255.0
             , alpha: alphaValue)
