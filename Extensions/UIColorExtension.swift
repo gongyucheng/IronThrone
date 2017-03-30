@@ -8,7 +8,8 @@
 
 import UIKit
 
-extension IronThronePrefix where Base: UIColor {
+extension UIColor: NamespaceWrappable {}
+extension NamespaceWrapper where T: UIColor {
 
     /**
      创建十六进制文本表示的 UIColor
@@ -69,7 +70,7 @@ extension IronThronePrefix where Base: UIColor {
         Scanner(string: gString as String).scanHexInt32(&g)
         Scanner(string: bString as String).scanHexInt32(&b)
 
-        return Base(red: CGFloat(r) / 255.0
+        return T(red: CGFloat(r) / 255.0
             , green: CGFloat(g) / 255.0
             , blue: CGFloat(b) / 255.0
             , alpha: alphaValue)

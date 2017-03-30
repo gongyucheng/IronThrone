@@ -7,28 +7,25 @@
 //
 import Foundation
 
-public protocol IronThroneCompatible {
-    associatedtype IronThroneCompatibleType
-    var irt: IronThroneCompatibleType { get }
-    static var irt: IronThroneCompatibleType.Type { get }
+public protocol NamespaceWrappable {
+    associatedtype WrapperType
+    var irt: WrapperType { get }
+    static var irt: WrapperType.Type { get }
 }
 
-public struct IronThronePrefix<Base> {
-    public let base: Base
+public extension NamespaceWrappable {
+    var irt: NamespaceWrapper<Self> {
+        return NamespaceWrapper(value: self)
+    }
 
-    init(base: Base) {
-        self.base = base
+    static var irt: NamespaceWrapper<Self>.Type {
+        return NamespaceWrapper.self
     }
 }
 
-public extension IronThroneCompatible where Self: NSObjectProtocol {
-    public var irt: IronThronePrefix<Self> {
-        return IronThronePrefix(base: self)
-    }
-
-    public static var irt: IronThronePrefix<Self>.Type {
-        return IronThronePrefix.self
+public struct NamespaceWrapper<T> {
+    public let wrappedValue: T
+    public init(value: T) {
+        self.wrappedValue = value
     }
 }
-
-extension NSObject: IronThroneCompatible { }

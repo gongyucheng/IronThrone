@@ -8,27 +8,10 @@
 
 import Foundation
 
-extension DateProxy {
+extension Date: NamespaceWrappable {}
+extension NamespaceWrapper where T == Date {
     public static var millisecondTimestamp: Int64 {
         return Int64(Date().timeIntervalSince1970 * 1000)
     }
 
-}
-
-extension Date: IronThroneCompatible {
-    public typealias IronThroneCompatibleType = DateProxy
-    public var irt: IronThroneCompatibleType {
-        return DateProxy(base: self)
-    }
-
-    public static var irt: IronThroneCompatibleType.Type {
-        return DateProxy.self
-    }
-}
-
-public struct DateProxy {
-    fileprivate let base: Date
-    init(base: Date) {
-        self.base = base
-    }
 }

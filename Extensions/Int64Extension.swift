@@ -8,13 +8,14 @@
 
 import Foundation
 
-extension Int64Proxy {
+extension Int64: NamespaceWrappable {}
+extension NamespaceWrapper where T == Int64 {
     public var base36String: String {
         var charArray: [Character] = []
 
         let base36 = "0123456789abcdefghijklmnopqrstuvwxyz"
         let mod = Int64(base36.characters.count)
-        var loopValue = base
+        var loopValue = wrappedValue
         repeat {
             let index = base36.characters.index(base36.startIndex, offsetBy: Int(loopValue % mod))
             let value = base36[index]
@@ -26,20 +27,4 @@ extension Int64Proxy {
     }
 }
 
-extension Int64: IronThroneCompatible {
-    public typealias IronThroneCompatibleType = Int64Proxy
-    public var irt: IronThroneCompatibleType {
-        return Int64Proxy(base: self)
-    }
 
-    public static var irt: IronThroneCompatibleType.Type {
-        return Int64Proxy.self
-    }
-}
-
-public struct Int64Proxy {
-    fileprivate let base: Int64
-    init(base: Int64) {
-        self.base = base
-    }
-}

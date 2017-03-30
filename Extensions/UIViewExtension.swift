@@ -8,12 +8,13 @@
 
 import UIKit
 
-extension IronThronePrefix where Base: UIView {
+extension UIView: NamespaceWrappable {}
+extension NamespaceWrapper where T: UIView {
     /**
      移除所有子视图
      */
     public func removeAllSubViews() {
-        base.subviews.forEach { (subView) -> () in
+        wrappedValue.subviews.forEach { (subView) -> () in
             subView.removeFromSuperview()
         }
     }

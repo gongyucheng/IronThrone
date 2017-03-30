@@ -8,24 +8,3 @@
 
 import Foundation
 
-extension StringProxy {
-
-}
-
-extension String: IronThroneCompatible {
-    public typealias CompatibleType = StringProxy
-    public var irt: CompatibleType {
-        return StringProxy(base: self)
-    }
-
-    public static var irt: CompatibleType.Type {
-        return StringProxy.self
-    }
-}
-
-public struct StringProxy {
-    fileprivate let base: String
-    init(base: String) {
-        self.base = base
-    }
-}

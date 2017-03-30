@@ -8,7 +8,8 @@
 
 import Foundation
 
-extension DataProxy {
+extension Data: NamespaceWrappable {}
+extension NamespaceWrapper where T == Data {
     /**
      按位异或
 
@@ -17,12 +18,12 @@ extension DataProxy {
      - returns: 异或结果
      */
     public func xor(key: UInt8) -> Data {
-        let dataByte = base.withUnsafeBytes {
+        let dataByte = wrappedValue.withUnsafeBytes {
             (bytes: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
             return bytes
         }
 
-        let dataLength = base.count / MemoryLayout<UInt8>.size
+        let dataLength = wrappedValue.count / MemoryLayout<UInt8>.size
 
         let resultByte = UnsafeMutablePointer<UInt8>.allocate(capacity: dataLength)
 
@@ -41,7 +42,7 @@ extension DataProxy {
 
     public func toJsonObject() -> Any? {
         do {
-            let object = try JSONSerialization.jsonObject(with: base
+            let object = try JSONSerialization.jsonObject(with: wrappedValue
                 , options: JSONSerialization.ReadingOptions())
             return object
         } catch {
@@ -50,27 +51,9 @@ extension DataProxy {
     }
 
     func toBytes() -> UnsafePointer<UInt8> {
-        return base.withUnsafeBytes({ (data: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
-            return data
-        })
-    }
-}
-
-extension Data: IronThroneCompatible {
-    public typealias IronThroneCompatibleType = DataProxy
-    public var irt: IronThroneCompatibleType {
-        return DataProxy(base: self)
-    }
-
-    public static var irt: IronThroneCompatibleType.Type {
-        return DataProxy.self
-    }
-}
-
-
-public struct DataProxy {
-    fileprivate let base: Data
-    init(base: Data) {
-        self.base = base
+        return wrappedValue
+            .withUnsafeBytes({ (data: UnsafePointer<UInt8>) -> UnsafePointer<UInt8> in
+                return data
+            })
     }
 }
