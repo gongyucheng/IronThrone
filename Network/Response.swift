@@ -82,7 +82,7 @@ extension HttpRequestable {
             networkGroup.enter()
         }
 
-        let handleNetworkGroup: () -> Void = { _ in
+        let handleNetworkGroup: () -> Void = { 
             if self.requestType.hasStatusBarNetworkIndicator {
                 networkGroup.leave()
             }
@@ -205,7 +205,7 @@ extension HttpRequestable {
                 }
 
         case let .httpDownload(downloadInfo):
-            let destination: DownloadRequest.DownloadFileDestination = { (_) in
+            let destination: DownloadRequest.DownloadFileDestination = { (_,_)  in
                 return (downloadInfo.destinationFileURL
                     , [.removePreviousFile, .createIntermediateDirectories])
             }
