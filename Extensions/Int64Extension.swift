@@ -14,10 +14,10 @@ extension NamespaceWrapper where T == Int64 {
         var charArray: [Character] = []
 
         let base36 = "0123456789abcdefghijklmnopqrstuvwxyz"
-        let mod = Int64(base36.characters.count)
+        let mod = Int64(base36.count)
         var loopValue = wrappedValue
         repeat {
-            let index = base36.characters.index(base36.startIndex, offsetBy: Int(loopValue % mod))
+            let index = base36.index(base36.startIndex, offsetBy: Int(loopValue % mod))
             let value = base36[index]
             charArray.insert(value, at: 0)
             loopValue /= mod
