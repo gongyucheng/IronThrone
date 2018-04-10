@@ -35,7 +35,7 @@ extension NamespaceWrapper where T == Data {
             resultByte[i] = xorByte
         }
         let result = Data(bytes: resultByte, count: dataLength)
-        resultByte.deallocate(capacity: dataLength)
+        resultByte.deallocate()
 
         return result
     }

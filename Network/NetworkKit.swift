@@ -278,7 +278,7 @@ public func isNetworkReachable() -> Bool {
     var result = true
 
     if let tmp = reachability {
-        if !tmp.isReachable {
+        if tmp.connection == .none {
             result = false
         }
     }else {

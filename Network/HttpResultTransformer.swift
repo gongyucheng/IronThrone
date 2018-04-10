@@ -28,7 +28,7 @@ public struct ModelTransformer<T: APIModelConvertible> {
 
     public static var dicArrayToAPIModelArray: ([[String: Any]]) -> HttpResult<[T]> {
         return { dicArray in
-            let modelArray = dicArray.flatMap { T.toModel(dic: $0) }
+            let modelArray = dicArray.compactMap { T.toModel(dic: $0) }
 
             return HttpResult.success(modelArray)
         }
