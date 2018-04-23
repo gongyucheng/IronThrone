@@ -125,6 +125,7 @@ public class NetworkKit {
             public let response: HTTPURLResponse?
             /// 请求耗时，单位毫秒
             public let requestTimeSpent: Int64
+            public let cURLRepresentation: String
         }
 
         static var requestSequence: Int = 0

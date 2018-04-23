@@ -22,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        hostAttribute.httpDNSType = .httpDNS("106.75.20.185")
         NetworkKit.APIConfiguration.hostsAttributes["opentest.seriousapps.cn"] = hostAttribute
 
+        NetworkKit.APIConfiguration.generalResponseCallback = { (responseData) in
+            print(responseData.cURLRepresentation)
+        }
+        
         return true
     }
 
