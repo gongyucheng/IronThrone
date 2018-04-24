@@ -94,16 +94,26 @@ extension HttpRequestable {
                 , parameters: parameters
                 , encoding: parameterEncodingType.convertToAlamofireEncoding()
                 , headers: headers)
+            let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             request.response { (dataResponse) in
+                let requestCostTime = Date.irt.millisecondTimestamp - apiRequestStartTimestamp
                 handleNetworkGroup()
                 let httpResult = self.convertAlamofireResponse(request: dataResponse.request
                     , response: dataResponse.response
                     , data: dataResponse.data
                     , error: dataResponse.error)
                 completionHandler(httpResult)
+                
+                let responseData = NetworkKit.APIConfiguration
+                    .ResponseData(request: self
+                        , result: httpResult
+                        , response: dataResponse.response
+                        , requestTimeSpent: requestCostTime
+                        , cURLRepresentation: request.debugDescription)
+                
+                NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
             }
         case .api:
-
             let request = NetworkKit.shared.alamofireManager
                 .request(urlString
                     , method: method.convertToAlamofireHttpMethod()
@@ -121,11 +131,12 @@ extension HttpRequestable {
                     .ResponseData(request: self
                         , result: result
                         , response: response.response
-                        , requestTimeSpent: requestCostTime)
+                        , requestTimeSpent: requestCostTime
+                        , cURLRepresentation: request.debugDescription)
+                
                 NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
             }
         case let .apiMultipart(multipartInfo):
-
             var apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             NetworkKit.shared.alamofireManager
                 .upload(multipartFormData: { (multipartFormData) in
@@ -156,9 +167,8 @@ extension HttpRequestable {
                     }
                 }
                 , to: urlString
-                , headers: headers) { (encodingResult) in
-
-
+                , headers: headers)
+                { (encodingResult) in
                     switch encodingResult {
                     case .success(let upload, _ , _):
                         // 开始发送网络请求
@@ -178,7 +188,8 @@ extension HttpRequestable {
                                 .ResponseData(request: self
                                     , result: result
                                     , response: response.response
-                                    , requestTimeSpent: requestCostTime)
+                                    , requestTimeSpent: requestCostTime
+                                    , cURLRepresentation: upload.debugDescription)
                             NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
                         }
                     case .failure(_):
@@ -192,12 +203,12 @@ extension HttpRequestable {
                             HttpResult<Any>.failure(NetworkError.multipartDataEncodingIncorrect)
                         completionHandler(error)
 
-
                         let responseData = NetworkKit.APIConfiguration
                             .ResponseData(request: self
                                 , result: error
                                 , response: nil
-                                , requestTimeSpent: encodingCostTime)
+                                , requestTimeSpent: encodingCostTime
+                                , cURLRepresentation: "$ curl command could not be created when encod multipart data info error")
                         NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
 
                     }
@@ -210,6 +221,7 @@ extension HttpRequestable {
                     , [.removePreviousFile, .createIntermediateDirectories])
             }
 
+            let downloadRequest =
             Alamofire.download(urlString
                 , method: method.convertToAlamofireHttpMethod()
                 , parameters: parameters
@@ -220,27 +232,53 @@ extension HttpRequestable {
                     downloadInfo.downloadProgress(progress.completedUnitCount
                         , progress.totalUnitCount)
                 }
+            
+            let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
+            downloadRequest
                 .response { (response) in
+                    let requestCostTime = Date.irt.millisecondTimestamp
+                        - apiRequestStartTimestamp
                     handleNetworkGroup()
                     let result = self.convertAlamofireResponse(request: response.request
                         , response: response.response
                         , data: nil
                         , error: response.error)
                     completionHandler(result)
+                    
+                    let responseData = NetworkKit.APIConfiguration
+                        .ResponseData(request: self
+                            , result: result
+                            , response: response.response
+                            , requestTimeSpent: requestCostTime
+                            , cURLRepresentation: downloadRequest.debugDescription)
+                    NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
+
                 }
 
         case let .upload(data):
-            Alamofire.upload(data
+            let uploadRequest = Alamofire.upload(data
                 , to: urlString
                 , method: method.convertToAlamofireHttpMethod()
                 , headers: headers)
+            let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
+            uploadRequest
                 .response { (response) in
+                    let requestCostTime = Date.irt.millisecondTimestamp
+                        - apiRequestStartTimestamp
                     handleNetworkGroup()
                     let result = self.convertAlamofireResponse(request: response.request
                         , response: response.response
                         , data: response.data
                         , error: response.error)
                     completionHandler(result)
+                    
+                    let responseData = NetworkKit.APIConfiguration
+                        .ResponseData(request: self
+                            , result: result
+                            , response: response.response
+                            , requestTimeSpent: requestCostTime
+                            , cURLRepresentation: uploadRequest.debugDescription)
+                    NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
                 }
         }
 
