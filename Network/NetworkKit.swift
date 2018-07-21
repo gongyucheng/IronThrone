@@ -220,11 +220,11 @@ extension NetworkKit {
                 }
 
             }
-        case .failure(_):
+        case let .failure(error):
             // 服务器返回数据非 json 格式
             result = .failure(NetworkError.dataFormatIncorrect)
 
-            print("IronThrone log: The response data of API is not Json format.")
+            print("IronThrone log: The response data of API is not Json format. \(error.localizedDescription)")
         }
 
         return result
