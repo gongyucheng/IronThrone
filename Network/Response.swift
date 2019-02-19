@@ -224,9 +224,20 @@ extension HttpRequestable {
                 }
 
         case let .httpDownload(downloadInfo):
+            
+            var downloadOptions: DownloadRequest.DownloadOptions = []
+            if let options = downloadInfo.downloadOptions {
+                if options.contains(HttpDownloadRequestInfo.DownloadOptions.removePreviousFile) {
+                    downloadOptions.insert(DownloadRequest.DownloadOptions.removePreviousFile)
+                }
+                if options.contains(HttpDownloadRequestInfo.DownloadOptions.createIntermediateDirectories) {
+                    downloadOptions.insert(DownloadRequest.DownloadOptions.createIntermediateDirectories)
+                }
+            }
+            
             let destination: DownloadRequest.DownloadFileDestination = { (_,_)  in
                 return (downloadInfo.destinationFileURL
-                    , [.removePreviousFile, .createIntermediateDirectories])
+                    , downloadOptions)
             }
 
             let downloadRequest =

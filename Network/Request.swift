@@ -43,7 +43,29 @@ public struct APIMultipartRequestInfo {
 
 public struct HttpDownloadRequestInfo {
     var destinationFileURL: URL
+    var downloadOptions: DownloadOptions?
     var downloadProgress: (Int64, Int64) -> Void
+    
+    public struct DownloadOptions : OptionSet {
+        
+        /// Returns the raw bitmask value of the option and satisfies the `RawRepresentable` protocol.
+        public let rawValue: UInt
+        
+        /// A `DownloadOptions` flag that creates intermediate directories for the destination URL if specified.
+        public static let createIntermediateDirectories = DownloadOptions(rawValue: 1 << 0)
+        
+        /// A `DownloadOptions` flag that removes a previous file from the destination URL if specified.
+        public static let removePreviousFile = DownloadOptions(rawValue: 1 << 1)
+        
+        /// Creates a `DownloadFileDestinationOptions` instance with the specified raw value.
+        ///
+        /// - parameter rawValue: The raw bitmask value for the option.
+        ///
+        /// - returns: A new log level instance.
+        public init(rawValue: UInt) {
+            self.rawValue = rawValue
+        }
+    }
 }
 
 

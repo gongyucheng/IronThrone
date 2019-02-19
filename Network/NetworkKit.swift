@@ -37,16 +37,17 @@ extension NetworkKit {
         return request
     }
 
-    public static func httpDownload(sourceHttpUrl: URL
-        , destinationFileURL: URL
+    public static func httpDownload(_ sourceHttpUrl: URL
         , method: HttpMethod
         , parameters: [String: Any]? = nil
         , headers: [String: String]? = nil
+        , to destination: (URL, HttpDownloadRequestInfo.DownloadOptions?)
         , downloadProgress: @escaping (Int64, Int64) -> Void = {_,_ in } ) -> HttpRequestable {
 
-        let downloadInfo = HttpDownloadRequestInfo(destinationFileURL: destinationFileURL
-            , downloadProgress: downloadProgress)
-
+        let downloadInfo = HttpDownloadRequestInfo(destinationFileURL: destination.0,
+                                                   downloadOptions: destination.1,
+                                                   downloadProgress: downloadProgress)
+        
         let request = HttpRequest(method: method, urlString: sourceHttpUrl.absoluteString)
         request.headers = headers
         request.parameters = parameters
