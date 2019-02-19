@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public enum HttpParameterEncodingType {
     case json
@@ -45,6 +46,7 @@ public struct HttpDownloadRequestInfo {
     var downloadProgress: (Int64, Int64) -> Void
 }
 
+
 public protocol HttpRequestable {
     var method: HttpMethod { get }
     var urlString: String { get }
@@ -52,21 +54,32 @@ public protocol HttpRequestable {
     var headers: [String: String]? { get set }
     var parameterEncodingType: HttpParameterEncodingType { get set }
     var requestType: HttpRequestType { get set }
-
+    
     init(method: HttpMethod, urlString: String)
+    
+    /// cancel request when already trigger reponse func,
+    /// Note: apiMultipart not support cancel func
+    func cancel()
 }
 
-public class HttpRequest: HttpRequestable {
-    public let method: HttpMethod
-    public let urlString: String
-    public var parameters: [String : Any]?
-    public var headers: [String : String]?
-    public var parameterEncodingType: HttpParameterEncodingType = .url
-    public var requestType: HttpRequestType = .http
 
-    public required init(method: HttpMethod, urlString: String) {
+class HttpRequest: HttpRequestable {
+    let method: HttpMethod
+    let urlString: String
+    var parameters: [String : Any]?
+    var headers: [String : String]?
+    var parameterEncodingType: HttpParameterEncodingType = .url
+    var requestType: HttpRequestType = .http
+
+    var alamofireRequest: Request?
+    
+    required init(method: HttpMethod, urlString: String) {
         self.method = method
         self.urlString = urlString
+    }
+    
+    func cancel() {
+        alamofireRequest?.cancel()
     }
 }
 
@@ -87,7 +100,7 @@ public protocol Multipartable {
 extension UIImage: Multipartable {
 
     public func packetAttribute() -> MultipartDataPacketAttribute {
-        var result = MultipartDataPacketAttribute(data: UIImageJPEGRepresentation(self, 0.8)!)
+        var result = MultipartDataPacketAttribute(data: self.jpegData(compressionQuality: 0.8)!)
         result.mimeType = "image/jpeg"
 
         return result
@@ -98,7 +111,7 @@ extension UIImage: Multipartable {
 extension String: Multipartable {
 
     public func packetAttribute() -> MultipartDataPacketAttribute {
-        return MultipartDataPacketAttribute(data: self.data(using: String.Encoding.utf8)!)
+        return MultipartDataPacketAttribute(data: self.data(using: .utf8)!)
     }
     
 }

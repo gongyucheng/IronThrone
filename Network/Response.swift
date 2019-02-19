@@ -69,6 +69,8 @@ extension HttpRequestable {
     public func response(completionHandler: @escaping (HttpResult<Any>) -> Void) {
         // TODO: mock feature
 
+        let httpRequest = self as? HttpRequest
+        
         // Network check feature
         if !isNetworkReachable() {
             completionHandler(.failure(NetworkError.noAvaliableNetwork))
@@ -94,6 +96,8 @@ extension HttpRequestable {
                 , parameters: parameters
                 , encoding: parameterEncodingType.convertToAlamofireEncoding()
                 , headers: headers)
+            httpRequest?.alamofireRequest = request
+            
             let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             request.response { (dataResponse) in
                 let requestCostTime = Date.irt.millisecondTimestamp - apiRequestStartTimestamp
@@ -113,6 +117,7 @@ extension HttpRequestable {
                 
                 NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
             }
+            
         case .api:
             let request = NetworkKit.shared.alamofireManager
                 .request(urlString
@@ -120,6 +125,8 @@ extension HttpRequestable {
                     , parameters: parameters
                     , encoding: parameterEncodingType.convertToAlamofireEncoding()
                     , headers: headers)
+            httpRequest?.alamofireRequest = request
+            
             let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             request.responseJSON { (response) in
                 let requestCostTime = Date.irt.millisecondTimestamp - apiRequestStartTimestamp
@@ -136,6 +143,7 @@ extension HttpRequestable {
                 
                 NetworkKit.APIConfiguration.generalResponseCallback?(responseData)
             }
+            
         case let .apiMultipart(multipartInfo):
             var apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             NetworkKit.shared.alamofireManager
@@ -232,6 +240,7 @@ extension HttpRequestable {
                     downloadInfo.downloadProgress(progress.completedUnitCount
                         , progress.totalUnitCount)
                 }
+            httpRequest?.alamofireRequest = downloadRequest
             
             let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             downloadRequest
@@ -260,6 +269,8 @@ extension HttpRequestable {
                 , to: urlString
                 , method: method.convertToAlamofireHttpMethod()
                 , headers: headers)
+            httpRequest?.alamofireRequest = uploadRequest
+            
             let apiRequestStartTimestamp = Date.irt.millisecondTimestamp
             uploadRequest
                 .response { (response) in
